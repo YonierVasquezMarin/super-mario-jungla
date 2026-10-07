@@ -63,7 +63,7 @@ interface LogoPixel {
         </a>
       </div>
 
-      <ul class="max-w-md space-y-1 text-left text-sm text-[#d7efe0]">
+      <ul class="max-w-md space-y-1 text-center text-sm text-[#d7efe0]">
         <li>Flechas o WASD para moverte.</li>
         <li>Espacio o Z para saltar.</li>
         <li>Arriba, pegado a una tubería, para trepar. En la cima, muévete hacia ella.</li>

@@ -40,6 +40,10 @@ export class Play {
 
   constructor() {
     const destroyRef = inject(DestroyRef);
+    const rootOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
 
     afterNextRender(() => {
       void this.boot();
@@ -63,6 +67,8 @@ export class Play {
     destroyRef.onDestroy(() => {
       cancelAnimationFrame(this.frameId);
       this.input.detach();
+      document.documentElement.style.overflow = rootOverflow;
+      document.body.style.overflow = bodyOverflow;
     });
   }
 

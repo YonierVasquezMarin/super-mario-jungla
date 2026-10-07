@@ -17,13 +17,13 @@ export class GameInput implements InputState {
   private jumpQueued = false;
   private menuQueued = false;
   private readonly onKeyDown = (event: KeyboardEvent): void => {
-    if (event.repeat) {
-      return;
-    }
-
     const key = event.key.toLowerCase();
     if (this.isGameKey(key)) {
       event.preventDefault();
+    }
+
+    if (event.repeat) {
+      return;
     }
 
     if (key === 'arrowleft' || key === 'a') {

@@ -26,10 +26,20 @@ a {
 .pixel-canvas {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;
+  height: 100%;
   background: #79d0ef;
+}
+
+.play-stage {
+  container-type: size;
+}
+
+.play-frame {
+  aspect-ratio: 320 / 224;
+  width: min(100cqi, calc(100cqb * 320 / 224));
+  max-height: 100cqb;
 }
 
 .touch-controls {
