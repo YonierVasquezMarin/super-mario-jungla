@@ -1,0 +1,105 @@
+<section class="flex min-h-dvh flex-col">
+  <header class="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+    <div>
+      <p class="text-xs tracking-[0.2em] text-[#b7e0c8] uppercase">Super Mario Jungla</p>
+      <h1 class="text-xl font-black text-[#f0d060]">{{ levelName() || 'Cargando nivel' }}</h1>
+    </div>
+    <dl class="flex items-center gap-4 text-sm">
+      <div>
+        <dt class="text-[#b7e0c8]">Vidas</dt>
+        <dd class="text-lg font-bold">{{ lives() }}</dd>
+      </div>
+      <div>
+        <dt class="text-[#b7e0c8]">Monedas</dt>
+        <dd class="text-lg font-bold">{{ coins() }}</dd>
+      </div>
+    </dl>
+    <div class="flex gap-2">
+      @if (status() === 'playing' || status() === 'paused') {
+        <button
+          type="button"
+          class="min-h-11 rounded-full border border-[#f0d060] px-4 font-semibold text-[#f0d060]"
+          (click)="pause()"
+        >
+          {{ status() === 'paused' ? 'Continuar' : 'Pausa' }}
+        </button>
+      }
+      <a
+        routerLink="/"
+        class="inline-flex min-h-11 items-center rounded-full bg-[#f0d060] px-4 font-bold text-[#24180c] no-underline"
+      >
+        Menú
+      </a>
+    </div>
+  </header>
+
+  <div class="flex flex-1 items-center justify-center px-3 pb-3">
+    <div class="relative w-full max-w-5xl">
+      <canvas
+        #canvas
+        class="pixel-canvas rounded-md"
+        [attr.width]="viewWidth"
+        [attr.height]="viewHeight"
+        aria-label="Partida. Flechas o WASD para mover, Espacio para saltar, flecha arriba para trepar y Escape para volver al menú."
+      ></canvas>
+
+      @if (status() === 'loading') {
+        <p class="absolute inset-0 flex items-center justify-center bg-[#102418]/70 text-lg" role="status">Cargando la selva…</p>
+      }
+
+      @if (status() === 'error') {
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#102418]/85 px-6 text-center" role="alert">
+          <p>{{ errorMessage() }}</p>
+          <a routerLink="/" class="inline-flex min-h-11 items-center rounded-full bg-[#f0d060] px-5 font-bold text-[#24180c] no-underline">
+            Volver al menú
+          </a>
+        </div>
+      }
+
+      @if (status() === 'paused') {
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#102418]/75">
+          <p class="text-3xl font-black text-[#f0d060]">Pausa</p>
+          <button type="button" class="min-h-11 rounded-full bg-[#f0d060] px-6 font-bold text-[#24180c]" (click)="pause()">
+            Continuar
+          </button>
+        </div>
+      }
+
+      @if (status() === 'victory') {
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#102418]/80 px-6 text-center" role="dialog" aria-modal="true" aria-labelledby="victory-title">
+          <h2 id="victory-title" class="text-3xl font-black text-[#f0d060]">Templo alcanzado</h2>
+          <p>Monedas recogidas: {{ coins() }}</p>
+          <a
+            #victoryButton
+            routerLink="/"
+            class="inline-flex min-h-11 items-center rounded-full bg-[#f0d060] px-6 font-bold text-[#24180c] no-underline"
+          >
+            Volver al menú
+          </a>
+        </div>
+      }
+
+      @if (status() === 'gameover') {
+        <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#102418]/80 px-6 text-center" role="dialog" aria-modal="true" aria-labelledby="over-title">
+          <h2 id="over-title" class="text-3xl font-black text-[#f0d060]">Sin vidas</h2>
+          <p>La selva se queda con esta partida.</p>
+          <button #retryButton type="button" class="min-h-11 rounded-full bg-[#f0d060] px-6 font-bold text-[#24180c]" (click)="retry()">
+            Reintentar
+          </button>
+          <a routerLink="/" class="inline-flex min-h-11 items-center font-semibold text-[#f0d060] no-underline">Volver al menú</a>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="touch-controls items-end justify-between gap-3 px-4 pb-4">
+    <div class="flex gap-3">
+      <button type="button" class="touch-none flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0d060] text-2xl font-black text-[#24180c] select-none" aria-label="Izquierda" (pointerdown)="hold('left', true, $event)" (pointerup)="hold('left', false, $event)" (pointercancel)="hold('left', false, $event)">←</button>
+      <button type="button" class="touch-none flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0d060] text-2xl font-black text-[#24180c] select-none" aria-label="Derecha" (pointerdown)="hold('right', true, $event)" (pointerup)="hold('right', false, $event)" (pointercancel)="hold('right', false, $event)">→</button>
+    </div>
+    <div class="flex gap-3">
+      <button type="button" class="touch-none flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f0d060] text-2xl font-black text-[#24180c] select-none" aria-label="Trepar" (pointerdown)="hold('up', true, $event)" (pointerup)="hold('up', false, $event)" (pointercancel)="hold('up', false, $event)">↑</button>
+      <button type="button" class="touch-none flex h-16 min-w-24 items-center justify-center rounded-2xl bg-[#f0d060] px-4 text-base font-black text-[#24180c] select-none" aria-label="Saltar" (pointerdown)="hold('jump', true, $event)" (pointerup)="hold('jump', false, $event)" (pointercancel)="hold('jump', false, $event)">Saltar</button>
+    </div>
+  </div>
+</section>

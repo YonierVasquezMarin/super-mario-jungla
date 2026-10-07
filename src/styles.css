@@ -1,3 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+html,
+body,
+app-root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #102418;
+  color: #f7f3e8;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid #f0d060;
+  outline-offset: 3px;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+.pixel-canvas {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #79d0ef;
+}
+
+.touch-controls {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .touch-controls {
+    display: flex;
+  }
+}
