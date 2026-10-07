@@ -34,7 +34,7 @@ interface LogoPixel {
             <rect [attr.x]="pixel.x" [attr.y]="pixel.y" width="1" height="1" fill="#f0d060" />
           }
         </svg>
-        <p class="text-lg text-[#d7efe0]">Un plataformas por la selva, hasta el templo.</p>
+        <p class="text-lg text-[#d7efe0]">Aventura por la selva, alcanza el templo.</p>
       </div>
 
       @if (errorMessage(); as message) {
