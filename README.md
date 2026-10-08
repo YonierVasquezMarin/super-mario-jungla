@@ -102,3 +102,60 @@ npm run build
 ```
 
 `npm test` corre los tests con Vitest. `npm run build` deja la aplicación en `dist/`.
+
+## 🚀 Despliegue en Firebase
+
+Instala la CLI, comprueba la versión e inicia sesión:
+
+```bash
+npm install -g firebase-tools
+firebase --version
+firebase login
+```
+
+En la [consola de Firebase](https://console.firebase.google.com/) crea el proyecto. En este repositorio el proyecto se llama `super-mario-jungla`.
+
+Desde la raíz del repositorio, inicializa Hosting:
+
+```bash
+firebase init hosting
+```
+
+Responde así al asistente:
+
+```text
+? Please select an option:
+> Use an existing project
+
+? Select a default Firebase project:
+> super-mario-jungla
+
+? What do you want to use as your public directory?
+> dist/super-mario-jungla/browser
+
+? Configure as a single-page app (rewrite all urls to /index.html)?
+> Yes
+
+? Set up automatic builds and deploys with GitHub?
+> Yes
+
+? For which GitHub repository would you like to set up a GitHub workflow?
+(format: user/repository)
+> YonierVasquezMarin/super-mario-jungla
+
+? Set up the workflow to run a build script before every deploy? (Y/n)
+> Y
+
+? What script should be run before every deploy?
+> npm ci && npm run build
+```
+
+El directorio público es `dist/super-mario-jungla/browser`, que es donde `npm run build` deja la aplicación de Angular. La opción de aplicación de una sola página reescribe todas las rutas a `/index.html`. El flujo de GitHub ejecuta `npm ci && npm run build` antes de cada despliegue.
+
+## 🔌 Extensiones recomendadas
+
+En el editor conviene instalar:
+
+- **Angular Language Service**, para autocompletado, navegación y diagnóstico en plantillas de Angular.
+- **Angular Snippets**, para atajos al escribir componentes, directivas y el resto de la sintaxis de Angular.
+- **GitHub Actions**, para ver y editar los flujos de despliegue de `.github/workflows/`.
