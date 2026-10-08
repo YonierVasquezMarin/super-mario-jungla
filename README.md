@@ -152,6 +152,8 @@ Responde así al asistente:
 
 El directorio público es `dist/super-mario-jungla/browser`, que es donde `npm run build` deja la aplicación de Angular. La opción de aplicación de una sola página reescribe todas las rutas a `/index.html`. El flujo de GitHub ejecuta `npm ci && npm run build` antes de cada despliegue.
 
+Para ver la URL del sitio desplegado, abre la consola de Firebase y entra en **Firebase > Hosting y Sin servidores > Hosting**.
+
 ## 🔌 Extensiones recomendadas
 
 En el editor conviene instalar:
